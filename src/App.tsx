@@ -13,11 +13,16 @@ type FilterStatus = 'all' | 'active' | 'completed';
 
 // #Constant
 const errorMessageLoader = 'Unable to load todos';
+// const errorMasage_TITLE = 'Title should not be empty';
+// const errorMasage_ADD = 'Unable to add a todo';
+// const errorMasage_DELETE = 'Unable to delete a todo';
+// const errorMasage_UPDATE = 'Unable to update a todo';
 
 export const App: React.FC = () => {
   // #State
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [serchQuery, setSearchQuery] = useState('');
 
   // #Error message
   const [isErrorVisible, setIsErrorVisible] = useState(false);
@@ -26,7 +31,7 @@ export const App: React.FC = () => {
   // #Filter status
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all');
 
-  // #count todo
+  // #Count todo
   const uncompletedTodosCount = todos.filter(todo => !todo.completed).length;
 
   useEffect(() => {
@@ -69,7 +74,11 @@ export const App: React.FC = () => {
       <h1 className="todoapp__title">todos</h1>
 
       <div className="todoapp__content">
-        <Header />
+        <Header
+          todos={todos}
+          serchQuery={serchQuery}
+          setSearchQuery={setSearchQuery}
+        />
 
         <section className="todoapp__main" data-cy="TodoList">
           {filteredTodos.map(todo => (
@@ -87,8 +96,8 @@ export const App: React.FC = () => {
       </div>
 
       <ErrorNotification
-        isVisible={isErrorVisible}
-        message={errorMessage}
+        isErrorVisible={isErrorVisible}
+        errorMessage={errorMessage}
         onClose={() => setIsErrorVisible(false)}
       />
     </div>

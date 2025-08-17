@@ -2,14 +2,14 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface ErrorNotificationProps {
-  isVisible: boolean;
-  message: string;
+  isErrorVisible: boolean;
+  errorMessage: string;
   onClose: () => void;
 }
 
 export const ErrorNotification: React.FC<ErrorNotificationProps> = ({
-  isVisible,
-  message,
+  isErrorVisible,
+  errorMessage,
   onClose,
 }) => {
   return (
@@ -20,10 +20,10 @@ export const ErrorNotification: React.FC<ErrorNotificationProps> = ({
         'is-danger',
         'is-light',
         'has-text-weight-normal',
-        { hidden: !isVisible },
+        { hidden: !isErrorVisible },
       )}
     >
-      {message && (
+      {errorMessage && (
         <>
           <button
             data-cy="HideErrorButton"
@@ -31,7 +31,7 @@ export const ErrorNotification: React.FC<ErrorNotificationProps> = ({
             className="delete"
             onClick={onClose}
           />
-          {message}
+          {errorMessage}
         </>
       )}
     </div>
