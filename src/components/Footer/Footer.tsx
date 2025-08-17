@@ -1,0 +1,65 @@
+import React from 'react';
+import classNames from 'classnames';
+
+interface FooterProps {
+  uncompletedTodosCount: number;
+  filterStatus: 'all' | 'active' | 'completed';
+  setFilterStatus: (status: 'all' | 'active' | 'completed') => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({
+  uncompletedTodosCount,
+  filterStatus,
+  setFilterStatus,
+}) => {
+  return (
+    <footer className="todoapp__footer hidden" data-cy="Footer">
+      <span className="todo-count" data-cy="TodosCounter">
+        {uncompletedTodosCount} items left
+      </span>
+
+      <nav className="filter" data-cy="Filter">
+        <a
+          href="#/"
+          className={classNames('filter__link', {
+            selected: filterStatus === 'all',
+          })}
+          data-cy="FilterLinkAll"
+          onClick={() => setFilterStatus('all')}
+        >
+          All
+        </a>
+
+        <a
+          href="#/active"
+          className={classNames('filter__link', {
+            selected: filterStatus === 'active',
+          })}
+          data-cy="FilterLinkActive"
+          onClick={() => setFilterStatus('active')}
+        >
+          Active
+        </a>
+
+        <a
+          href="#/completed"
+          className={classNames('filter__link', {
+            selected: filterStatus === 'completed',
+          })}
+          data-cy="FilterLinkCompleted"
+          onClick={() => setFilterStatus('completed')}
+        >
+          Completed
+        </a>
+      </nav>
+
+      <button
+        type="button"
+        className="todoapp__clear-completed"
+        data-cy="ClearCompletedButton"
+      >
+        Clear completed
+      </button>
+    </footer>
+  );
+};
