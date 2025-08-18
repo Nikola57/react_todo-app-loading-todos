@@ -8,15 +8,15 @@ import { Footer } from './components/Footer/Footer';
 import { ErrorNotification } from './components/ErrorNotif/ErrorNotification';
 import { Todo } from './types/Todo';
 
-// #Type
-type FilterStatus = 'all' | 'active' | 'completed';
+// #Enum for filter status
+export enum FilterStatus {
+  All = 'all',
+  Active = 'active',
+  Completed = 'completed',
+}
 
 // #Constant
 const errorMessageLoader = 'Unable to load todos';
-// const errorMasage_TITLE = 'Title should not be empty';
-// const errorMasage_ADD = 'Unable to add a todo';
-// const errorMasage_DELETE = 'Unable to delete a todo';
-// const errorMasage_UPDATE = 'Unable to update a todo';
 
 export const App: React.FC = () => {
   // #State
@@ -29,7 +29,9 @@ export const App: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   // #Filter status
-  const [filterStatus, setFilterStatus] = useState<FilterStatus>('all');
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>(
+    FilterStatus.All,
+  );
 
   // #Count todo
   const uncompletedTodosCount = todos.filter(todo => !todo.completed).length;
@@ -58,10 +60,13 @@ export const App: React.FC = () => {
   // #Filter todos
   const filteredTodos = useMemo(() => {
     switch (filterStatus) {
-      case 'active':
+      case FilterStatus.All:
+        return todos;
+
+      case FilterStatus.Active:
         return todos.filter(todo => !todo.completed);
 
-      case 'completed':
+      case FilterStatus.Completed:
         return todos.filter(todo => todo.completed);
 
       default:

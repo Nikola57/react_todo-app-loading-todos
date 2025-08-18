@@ -1,10 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 
+// #Import
+import { FilterStatus } from '../../App';
+
+// #Props
 interface FooterProps {
   uncompletedTodosCount: number;
-  filterStatus: 'all' | 'active' | 'completed';
-  setFilterStatus: (status: 'all' | 'active' | 'completed') => void;
+  filterStatus: FilterStatus;
+  setFilterStatus: (status: FilterStatus) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -19,38 +23,19 @@ export const Footer: React.FC<FooterProps> = ({
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={classNames('filter__link', {
-            selected: filterStatus === 'all',
-          })}
-          data-cy="FilterLinkAll"
-          onClick={() => setFilterStatus('all')}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={classNames('filter__link', {
-            selected: filterStatus === 'active',
-          })}
-          data-cy="FilterLinkActive"
-          onClick={() => setFilterStatus('active')}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={classNames('filter__link', {
-            selected: filterStatus === 'completed',
-          })}
-          data-cy="FilterLinkCompleted"
-          onClick={() => setFilterStatus('completed')}
-        >
-          Completed
-        </a>
+        {Object.values(FilterStatus).map(status => (
+          <a
+            key={status}
+            href={`#/${status === FilterStatus.All ? '' : status}`}
+            className={classNames('filter__link', {
+              selected: filterStatus === status,
+            })}
+            data-cy={`FilterLink${status.charAt(0).toUpperCase() + status.slice(1)}`}
+            onClick={() => setFilterStatus(status)}
+          >
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </a>
+        ))}
       </nav>
 
       <button

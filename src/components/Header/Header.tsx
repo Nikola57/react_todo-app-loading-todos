@@ -1,11 +1,15 @@
 import React from 'react';
+
+// #Import
 import { Todo } from '../../types/Todo';
 
+// #Props
 interface HeaderProps {
   todos: Todo[];
   serchQuery: string;
   setSearchQuery: (query: string) => void;
 }
+
 export const Header: React.FC<HeaderProps> = ({
   todos,
   serchQuery,
